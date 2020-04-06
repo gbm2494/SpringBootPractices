@@ -1,0 +1,18 @@
+type Product {
+  id: ID!
+  name: String!
+  type: String!
+  price: Float!
+  description: String!
+}
+
+type Query {
+  findAllProducts: [Product]!
+  countProducts: Int!
+}
+
+type Mutation {
+  newProduct(name: String!, type: String!, price: Float!, description: String!) : Product!
+  deleteProduct(id:ID!) : Boolean
+  updateProductDescription(newDescription: String!, id:ID!) : Product!
+}
