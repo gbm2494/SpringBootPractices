@@ -1,10 +1,13 @@
 package com.conferenceApp.conferenceAppDemo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
 //name of the db table
 @Entity(name = "sessions")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Session {
 
     @Id
@@ -23,9 +26,9 @@ public class Session {
 
     @ManyToMany
     @JoinTable(
-            name="session_speakers",
+            name = "session_speakers",
             joinColumns = @JoinColumn(name = "session_id"),
-            inverseJoinColumns =  = @JoinColumn(name = "speaker_id"))
+            inverseJoinColumns = @JoinColumn(name = "speaker_id"))
     private List<Speaker> speakers;
 
     public Session() {
