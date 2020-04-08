@@ -7,7 +7,7 @@ import java.util.List;
 
 //name of the db table
 @Entity(name = "sessions")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) //ignore those properties,
 public class Session {
 
     @Id

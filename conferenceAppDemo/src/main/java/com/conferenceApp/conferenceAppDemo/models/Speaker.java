@@ -1,11 +1,14 @@
 package com.conferenceApp.conferenceAppDemo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity(name = "speakers")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) //ignore those properties
 public class Speaker {
 
     @Id
@@ -34,6 +37,7 @@ public class Speaker {
     private byte[] photo;
 
     @ManyToMany(mappedBy = "speakers")
+    @JsonIgnore //to ignore the property on the json payload
     private List<Session> sessions;
 
     public Speaker() {

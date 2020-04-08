@@ -1,7 +1,7 @@
 package com.conferenceApp.conferenceAppDemo.controllers;
 
-import com.conferenceApp.conferenceAppDemo.models.Session;
-import com.conferenceApp.conferenceAppDemo.repositories.SessionRepository;
+import com.conferenceApp.conferenceAppDemo.models.Speaker;
+import com.conferenceApp.conferenceAppDemo.repositories.SpeakerRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,42 +10,41 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/sessions")
-public class SessionsController {
+@RequestMapping("/api/v1/speakers")
+public class SpeakersController {
 
     @Autowired
-    private SessionRepository sessionRepository;
+    private SpeakerRepository speakerRepository;
 
     @GetMapping
-    public List<Session> list(){
-        return sessionRepository.findAll();
+    public List<Speaker> list(){
+        return speakerRepository.findAll();
     }
 
     @GetMapping
     @RequestMapping("{id}")
-    public Session get(@PathVariable Long id){
-        return sessionRepository.getOne(id);
+    public Speaker get(@PathVariable Long id){
+        return speakerRepository.getOne(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Session create(@RequestBody final Session session){
-        return sessionRepository.saveAndFlush(session); //save and also commit to DB
+    public Speaker create(@PathVariable final Speaker speaker){
+        return speakerRepository.saveAndFlush(speaker);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable Long id){
         //also need to check for cascade values before deleting
-        sessionRepository.deleteById(id);
+        speakerRepository.deleteById(id);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
-    public Session update(@PathVariable Long id, @RequestBody Session session){
+    public Speaker update(@PathVariable Long id, @RequestBody Speaker speaker){
         //because this is a PUT, we expect all attributes to be passed in. A PATCH would only need what
         //TODO Add validation that all attributes are passed in, otherwise return a 400 bad payload
-        Session existingSession = sessionRepository.getOne(id);
-        BeanUtils.copyProperties(session, existingSession, "id");
-        return sessionRepository.saveAndFlush(existingSession);
+        Speaker existingSpeaker = speakerRepository.getOne(id);
+        BeanUtils.copyProperties(speaker, existingSpeaker, "id");
+        return speakerRepository.saveAndFlush(existingSpeaker);
     }
-
 }
