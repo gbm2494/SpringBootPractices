@@ -26,6 +26,17 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions> <!-- excludes the tomcat dependency -->
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jetty</artifactId> <!-- instead of tomcat -->
 		</dependency>
 
 		<dependency>
@@ -52,6 +63,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<executable>true</executable>
+					<!-- with this option you just need to run maven package and inside target folder call ./fileJar and you can run the app as a standalone app
+					without this execute maven package and java -jar jarName inside /target to run the app-->
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
