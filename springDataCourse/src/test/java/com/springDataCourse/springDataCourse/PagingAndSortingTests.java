@@ -108,6 +108,30 @@ public class PagingAndSortingTests {
         assertThat(page.getContent()).extracting(Flight::getDestination).containsExactly("44", "43", "42", "41", "40");
     }
 
+    @Test
+    public void shouldPageAndSortADerivedQuery() {
+        for (int i = 0; i < 10; i++) {
+            final Flight flight = createFlight(String.valueOf(i));
+            flight.setOrigin("Paris");
+            flightRepository.save(flight);
+        }
+
+        for (int i = 0; i < 10; i++) {
+            final Flight flight = createFlight(String.valueOf(i));
+            flight.setOrigin("London");
+            flightRepository.save(flight);
+        }
+
+        final Page<Flight> flightPage = flightRepository.findByOrigin("London", PageRequest.of(0, 5, Sort.by(DESC, "destination")));
+
+        assertThat(flightPage.getTotalElements()).isEqualTo(10);
+        assertThat(flightPage.getNumberOfElements()).isEqualTo(5);
+        assertThat(flightPage.getTotalPages()).isEqualTo(2);
+        assertThat(flightPage.getContent())
+                .extracting(Flight::getDestination)
+                .containsExactly("9", "8", "7", "6", "5");
+    }
+
     private Flight createFlight(String destination, LocalDateTime scheduledAt) {
         final Flight flight = new Flight();
         flight.setOrigin("Costa Rica");
