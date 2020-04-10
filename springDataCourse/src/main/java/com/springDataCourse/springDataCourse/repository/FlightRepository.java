@@ -12,4 +12,6 @@ public interface FlightRepository extends CrudRepository<Flight, Long> {
     List<Flight> findByOriginAndDestination(String origin, String destination);
 
     List<Flight> findByOriginIn(String ... origins); //SELECT * FROM flight WHERE origin IN (?)
+
+    List<Flight> findByOriginIgnoreCase(String origin);
 }
