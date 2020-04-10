@@ -1,6 +1,7 @@
 package com.springDataCourse.springDataCourse;
 
 import com.springDataCourse.springDataCourse.entity.Flight;
+import com.springDataCourse.springDataCourse.repository.FlightRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -16,25 +17,25 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest //only spring concept will be created containing persistence specific beans
-class SpringDataCourseApplicationTests {
+class CrudTests {
 
 	@Autowired
-	private EntityManager entityManager;
+	private FlightRepository flightRepository;
 
 	@Test
-	void verifyFlightCanBeSaved() {
+	public void shouldPerformCRUDOperations(){
 		final Flight flight = new Flight();
 		flight.setOrigin("Costa Rica");
 		flight.setDestination("Madrid");
 		flight.setScheduledAt(LocalDateTime.parse("2021-03-24T14:14:00"));
 
-		entityManager.persist(flight);
+		flightRepository.save(flight);
 
-		final TypedQuery<Flight> results = entityManager.createQuery("Select f from Flight f ", Flight.class);
+		assertThat(flightRepository.findAll()).hasSize(1).first().isEqualToComparingFieldByField(flight);
 
-		final List<Flight> resultList = results.getResultList();
+		flightRepository.deleteById(flight.getId());
 
-		assertThat(resultList).hasSize(1).first().isEqualTo(flight);
+		assertThat(flightRepository.count()).isZero();
 
 	}
 
