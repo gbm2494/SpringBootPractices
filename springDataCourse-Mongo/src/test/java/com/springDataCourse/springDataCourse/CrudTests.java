@@ -4,19 +4,17 @@ import com.springDataCourse.springDataCourse.entity.Flight;
 import com.springDataCourse.springDataCourse.repository.FlightRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.junit.runner.RunWith;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
-@DataJpaTest //only spring concept will be created containing persistence specific beans
+@DataMongoTest
+		//only spring concept will be created containing persistence specific beans
 class CrudTests {
 
 	@Autowired

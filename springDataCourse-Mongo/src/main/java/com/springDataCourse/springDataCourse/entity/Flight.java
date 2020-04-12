@@ -1,16 +1,11 @@
 package com.springDataCourse.springDataCourse.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.time.LocalDateTime;
 
-@Entity
 public class Flight {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+    //MongoDB prefers Strings instead of Long
+    private String id;
 
     private String origin;
 
@@ -18,11 +13,11 @@ public class Flight {
 
     private LocalDateTime scheduledAt;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
